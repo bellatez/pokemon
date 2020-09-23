@@ -26,15 +26,20 @@ class PokemonController extends Controller
         $search_by = $request->get('option');
         $results = [];
 
-
         if($this->dataset == null){
             Storage::put('backup.json', file_get_contents('https://api.pokemontcg.io/v1/cards?cards?setCode=base4'));
             $this->dataset = json_decode(Storage::disk('local')->get('backup.json'), true);
-
         }
+
+        foreach ($this->dataset['cards'] as $key => $value) {
+            $this->dataset['cards'][$key]['name'] = mb_convert_encoding(strtolower($value['name']), 'UTF-8', 'UTF-8');
+        }
+        $newJsonString = json_encode($this->dataset);
+        file_put_contents(storage_path('app/public/backup.json'), $newJsonString);
+
         $collection = collect($this->dataset['cards']);
 
-         if ($q == null) {
+        if ($q == null) {
             return view('search');
 
         }
@@ -42,7 +47,7 @@ class PokemonController extends Controller
         // perform search based on varying categories
         if($search_by == 'name')
         {
-            $results = $collection->where('name', ucfirst(strtolower($q)))->all();
+            $results = $collection->where('name', strtolower($q))->all();
         }
         if($search_by == 'rarity')
         {
@@ -60,6 +65,7 @@ class PokemonController extends Controller
 
     public function backupData()
     {
+
         Storage::put('backup.json', file_get_contents('https://api.pokemontcg.io/v1/cards?setCode=base4'));
         return redirect()->back()->with('success', 'Backup created Successfully!');
     }
