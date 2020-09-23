@@ -42,11 +42,11 @@ class PokemonController extends Controller
         // perform search based on varying categories
         if($search_by == 'name')
         {
-            $results = $collection->where('name', $q)->all();
+            $results = $collection->where('name', ucfirst(strtolower($q)))->all();
         }
         if($search_by == 'rarity')
         {
-            $results = $collection->where('rarity', $q)->all();
+            $results = $collection->where('rarity', ucfirst(strtolower($q)))->all();
         }
         if($search_by == 'hp')
         {
@@ -60,7 +60,7 @@ class PokemonController extends Controller
 
     public function backupData()
     {
-        Storage::put('backup.json', file_get_contents('https://api.pokemontcg.io/v1/cards?cards?setCode=base4'));
+        Storage::put('backup.json', file_get_contents('https://api.pokemontcg.io/v1/cards?setCode=base4'));
         return redirect()->back()->with('success', 'Backup created Successfully!');
     }
 
