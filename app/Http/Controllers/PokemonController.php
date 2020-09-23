@@ -46,8 +46,8 @@ class PokemonController extends Controller
             $results = $collection->where('hp', $q)->all();
         }
 
-        // return view('search', compact('results'));
-        return $results;
+        return view('search', compact('results'));
+        // return $results;
 
     }
 
