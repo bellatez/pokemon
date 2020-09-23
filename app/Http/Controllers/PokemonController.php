@@ -32,10 +32,11 @@ class PokemonController extends Controller
         }
 
         foreach ($this->dataset['cards'] as $key => $value) {
-            $this->dataset['cards'][$key]['name'] = mb_convert_encoding(strtolower($value['name']), 'UTF-8', 'UTF-8');
+            $this->dataset['cards'][$key]['name'] = utf8_encode(strtolower($value['name']));
         }
         $newJsonString = json_encode($this->dataset);
         file_put_contents(storage_path('app/public/backup.json'), $newJsonString);
+
 
         $collection = collect($this->dataset['cards']);
 
@@ -47,7 +48,7 @@ class PokemonController extends Controller
         // perform search based on varying categories
         if($search_by == 'name')
         {
-            $results = $collection->where('name', strtolower($q))->all();
+            $results = $collection->where('name', \utf8_encode(strtolower($q)))->all();
         }
         if($search_by == 'rarity')
         {
