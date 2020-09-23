@@ -21,7 +21,7 @@
                         <select class="form-control form-search-control" name="option" id="exampleFormControlSelect1">
                             <option value="name" {{app('request')->input('option') == 'name' ? 'selected': ''}}>name</option>
                             <option value="rarity" {{app('request')->input('option') == 'rarity' ? 'selected': ''}}>Rarity</option>
-                            <option value="hp" {{app('request')->input('option') == 'hp' ? 'selected': ''}}>Hip points</option>
+                            <option value="hp" {{app('request')->input('option') == 'hp' ? 'selected': ''}}>Hit points</option>
                         </select>
                     </div>
                     </div>
