@@ -26,7 +26,7 @@
                     </div>
                     </div>
                     <div class="form-group mx-sm-3 mb-2">
-                      <input type="text" class="form-control" placeholder="enter search" name="query">
+                      <input type="text" class="form-control" value="{{ app('request')->has('query')? app('request')->input('query'): null }}" placeholder="enter search" name="query">
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
                 </form>
