@@ -23,7 +23,7 @@ class PokemonController extends Controller
     {
         //convert json data to collection inorder to perform queries
         if($this->dataset == null){
-            return back();
+            
         }
         $collection = collect($this->dataset['cards']);
 
@@ -32,7 +32,19 @@ class PokemonController extends Controller
         $results = [];
 
         if($q == null){
-            return back();
+            Storage::put('backup.json', file_get_contents('https://api.pokemontcg.io/v1/cards?cards?setCode=base4'));
+            if ($search_by == 'name') {
+                $results = $collection->where('name', $q)->all();
+            }
+            if ($search_by == 'rarity') {
+                $results = $collection->where('rarity', $q)->all();
+            }
+            if ($search_by == 'hp') {
+                $results = $collection->where('hp', $q)->all();
+            }
+
+            return view('search', compact('results'));
+
         }
 
         // perform search based on varying categories
