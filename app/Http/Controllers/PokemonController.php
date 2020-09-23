@@ -22,6 +22,9 @@ class PokemonController extends Controller
     public function searchData(Request $request)
     {
         //convert json data to collection inorder to perform queries
+        if($this->dataset == null){
+            return back();
+        }
         $collection = collect($this->dataset['cards']);
 
         $q = $request->get('query');
@@ -46,8 +49,8 @@ class PokemonController extends Controller
             $results = $collection->where('hp', $q)->all();
         }
 
-        // return view('search', compact('results'));
-        return $results;
+        return view('search', compact('results'));
+        // return $results;
 
     }
 
