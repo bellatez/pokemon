@@ -47,7 +47,7 @@ class PokemonController extends Controller
         }
 
         // return view('search', compact('results'));
-        return results;
+        return $results;
 
     }
 
