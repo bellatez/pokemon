@@ -1,4 +1,4 @@
-# pokemon
+# pokemon http://pokemonlaravel.herokuapp.com
 laravel app with the https://pokemontcg.io/ api
 
 ### Local Environment Setup (Configuration de l'environnement local)
